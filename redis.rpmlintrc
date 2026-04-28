@@ -1,0 +1,35 @@
+# rpmlint configuration for Redis RPM package
+
+# Spelling errors for valid technical terms
+addFilter(r'spelling-error.*reconnection')
+addFilter(r'spelling-error.*redismodule')
+
+# Intentional restrictive permissions for security
+# Config directory and files should not be world-readable
+addFilter(r'non-standard-dir-perm /etc/redis')
+addFilter(r'non-standard-dir-perm /var/lib/redis')
+addFilter(r'non-standard-dir-perm /var/log/redis')
+addFilter(r'non-readable /etc/redis/')
+
+# Redis runs as dedicated 'redis' user - this is expected
+addFilter(r'non-standard-uid .* redis')
+addFilter(r'non-standard-gid .* redis')
+
+# systemd drop-in directories in /etc are intentional for user overrides
+addFilter(r'systemd-unit-in-etc /etc/systemd/system/redis')
+
+# The rm command in %post is used safely for migration cleanup
+addFilter(r'dangerous-command-in-%post rm')
+
+# devel package contains only header and macros (no binaries expected)
+addFilter(r'redis-devel.*only-non-binary-in-usr-lib')
+addFilter(r'redis-devel.*no-documentation')
+
+# tmpfile entry - the runtime directory is managed by tmpfiles.d
+addFilter(r'tmpfile-not-in-filelist /run/redis')
+
+# Missing man pages - upstream doesn't provide them
+addFilter(r'no-manual-page-for-binary redis-')
+
+# OpenSSL cipher configuration is handled by Redis itself
+addFilter(r'crypto-policy-non-compliance-openssl')
