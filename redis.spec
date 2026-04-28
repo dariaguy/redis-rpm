@@ -7,7 +7,7 @@
 
 Name:              redis
 Version:           8.6.0
-Release:           4%{?dist}
+Release:           5%{?dist}
 Summary:           A persistent key-value database
 
 # License breakdown:
@@ -278,6 +278,9 @@ fi
 
 
 %changelog
+* Tue Apr 28 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-5
+- Bump version
+
 * Tue Apr 28 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-4
 - Fix rpmlint errors: buildroot usage, tmpfiles creation, log dir permissions
 
