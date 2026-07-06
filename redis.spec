@@ -7,7 +7,7 @@
 
 Name:              redis
 Version:           8.6.0
-Release:           5%{?dist}
+Release:           6%{?dist}
 Summary:           A persistent key-value database
 
 # License breakdown:
@@ -250,7 +250,7 @@ fi
 %dir %attr(0750, root, redis) %{_localstatedir}/log/%{name}
 %attr(0640, redis, redis) %ghost %{_localstatedir}/log/%{name}/redis-server.log
 %attr(0640, redis, redis) %ghost %{_localstatedir}/log/%{name}/redis-sentinel.log
-%ghost %{_rundir}/%{name}
+%attr(0755, redis, redis) %ghost %{_rundir}/%{name}
 
 %{_bindir}/%{name}-server
 %{_bindir}/%{name}-sentinel
@@ -278,6 +278,9 @@ fi
 
 
 %changelog
+* Mon Jul 06 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-6
+- Set explicit attr on %%ghost /run/redis to silence zero-perms-ghost
+
 * Tue Apr 28 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-5
 - Bump version
 
