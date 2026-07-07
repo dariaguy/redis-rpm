@@ -25,9 +25,6 @@ addFilter(r'dangerous-command-in-%post rm')
 addFilter(r'redis-devel.*only-non-binary-in-usr-lib')
 addFilter(r'redis-devel.*no-documentation')
 
-# tmpfile entry - the runtime directory is managed by tmpfiles.d
-addFilter(r'tmpfile-not-in-filelist /run/redis')
-
 # Missing man pages - upstream doesn't provide them
 addFilter(r'no-manual-page-for-binary redis-')
 

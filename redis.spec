@@ -7,7 +7,7 @@
 
 Name:              redis
 Version:           8.6.0
-Release:           6%{?dist}
+Release:           7%{?dist}
 Summary:           A persistent key-value database
 
 # License breakdown:
@@ -278,6 +278,9 @@ fi
 
 
 %changelog
+* Tue Jul 07 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-7
+- Drop dead tmpfile-not-in-filelist rpmlintrc filter (unused-rpmlintrc-filter)
+
 * Mon Jul 06 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-6
 - Set explicit attr on %%ghost /run/redis to silence zero-perms-ghost
 
