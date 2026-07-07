@@ -7,7 +7,7 @@
 
 Name:              redis
 Version:           8.6.0
-Release:           7%{?dist}
+Release:           8%{?dist}
 Summary:           A persistent key-value database
 
 # License breakdown:
@@ -142,7 +142,10 @@ cat << 'EOF' | tee macros.redis
 %%redis_modules_cfg %redis_modules_cfg
 EOF
 
-%global make_flags DEBUG="" V="echo" BUILD_WITH_SYSTEMD=yes BUILD_TLS=yes
+# OpenSSL 4.0 (rawhide) deprecates APIs redis still uses (e.g.
+# X509_NAME_get_text_by_NID); redis builds with -Werror=deprecated-declarations,
+# so keep deprecation warnings non-fatal until upstream migrates.
+%global make_flags DEBUG="" V="echo" BUILD_WITH_SYSTEMD=yes BUILD_TLS=yes REDIS_CFLAGS="-Wno-error=deprecated-declarations"
 
 %build
 %make_build %{make_flags} PREFIX=%{_prefix}
@@ -278,6 +281,9 @@ fi
 
 
 %changelog
+* Tue Jul 07 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-8
+- Keep deprecation warnings non-fatal to fix rawhide build against OpenSSL 4.0
+
 * Tue Jul 07 2026 Daria Guy <daria.guy@redis.com> - 8.6.0-7
 - Drop dead tmpfile-not-in-filelist rpmlintrc filter (unused-rpmlintrc-filter)
 
